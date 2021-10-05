@@ -1,0 +1,31 @@
+{
+  "name": "simpleorm",
+  "version": "1.0.0",
+  "types": "types",
+  "main": "index.js",
+  "repository": {
+    "url": "https://gitlab.com/daniellvaz/simpleorm"
+  },
+  "author": {
+    "name": "Daniel Murilo Vaz",
+    "email": "daniellmvaz@gmail.com",
+    "url": "https://www.daniellmvaz.com"
+  },
+  "keywords": [
+    "orm",
+    "simpleorm",
+    "node",
+    "database"
+  ],
+  "dependencies": {
+    "knex": "^0.95.11",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.0",
+    "oracledb": "^5.2.0",
+    "pg": "^8.7.1",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
+}
