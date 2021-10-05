@@ -1,10 +1,12 @@
 import { Knex } from "knex";
 import { ICondition } from "./types/ICondition";
+import { IParams } from "./types/IParams";
 import { ITableField } from "./types/ITableField";
 
 export = Client;
 declare class Client {
   database: Knex;
+
   raw<t>(query: string): Promise<t[]>;
   /**
    * Method to delete an value on database
@@ -15,7 +17,7 @@ declare class Client {
    * @param {object} { where }
    * @returns {object}
    */
-  delete<t>(table: string, { where }: ICondition<t>): Promise<void>;
+  delete<r, t>(table: string, { where }: IParams<r, t>): Promise<void>;
 
   /**
    * Method to update a value on table
@@ -27,7 +29,7 @@ declare class Client {
    * @param {object} fields { name: "user name", age: 29, email: "user@email.com" } // outputs SET name = "user name"
    * @param {object} data { name: "user name", age: 29, email: "user@email.com" } // outputs SET name = "user name"
    */
-  update<t>(table: string, { where, data }: ICondition<t>): Promise<t>;
+  update<r, t>(table: string, { where, data }: IParams<r, t>): Promise<t>;
 
   /**
    * Method to insert a value on table
@@ -49,7 +51,11 @@ declare class Client {
    * @param {string} table
    * @returns {Object}
    */
-  findAll<t>(column?: string, table: string, include?: boolean): Promise<t[]>;
+  findAll<t>(
+    column: string | null,
+    table: string,
+    include?: boolean
+  ): Promise<t[]>;
 
   /**
    * * Method to find all data
@@ -66,7 +72,7 @@ declare class Client {
    * @returns {Promise}
    */
   findOne<t>(
-    column?: string,
+    column: string | null,
     table: string,
     where: t
   ): Promise<t[] | undefined>;

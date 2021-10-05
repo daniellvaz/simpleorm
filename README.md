@@ -77,7 +77,7 @@ const client = require("./path/to/client");
 module.exports = {
   async index(request, response) {
     try {
-      const row = await client.findAll("my_table");
+      const row = await client.findAll(null, "my_table"); //first parameter null default "*"
 
       return res.status(200).json(row);
     } catch (error) {
