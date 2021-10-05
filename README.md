@@ -1,5 +1,4 @@
 <h1 align="center">
-  Welcome to MySimpleOrm 👋
   <img src="https://github.com/daniellvaz/simpleorm/blob/master/examples/logo.png">
 </h1>
 <p>
