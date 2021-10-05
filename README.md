@@ -2,27 +2,84 @@
   <img src="https://github.com/daniellvaz/simpleorm/blob/master/examples/logo.png">
 </h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/daniellvaz/simpleorm" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
+  <img alt="Version" src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" />
   <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+    <img alt="License: MIT" src="https://img.shields.io/badge/Codesandbox-000000?style=for-the-badge&logo=CodeSandbox&logoColor=white" />
   </a>
   <a href="https://twitter.com/daniellmurilo" target="_blank">
-    <img alt="Twitter: daniellmurilo" src="https://img.shields.io/twitter/follow/daniellmurilo.svg?style=social" />
+    <img alt="Twitter: daniellmurilo" src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white"/>
+  </a>
+  <a href="https://twitter.com/daniellmurilo" target="_blank">
+    <img alt="Twitter: daniellmurilo" src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" />
   </a>
 </p>
 
+<br>
+
 > An simple object relational mapper project.
 
-### 🏠 [Homepage](https://www.daniellvaz.com)
+<hr>
+<br>
 
 ## Install
 
 ```sh
 yarn add or npm install
 ```
+
+<br>
+
+## simpleorm.config.json
+
+```json
+{
+  "production": {
+    "client": "mysql",
+    "connection": {
+      "host": "127.0.0.1",
+      "port": 3306,
+      "user": "root",
+      "password": "my_password",
+      "database": "my_database"
+    },
+    "migrantions": "./path/to/your/migrantions"
+  }
+}
+```
+
+<br>
+
+## index.js
+
+```javascript
+const { Client } = require("siimpleorm");
+
+const database = new Client();
+
+module.exports = database;
+```
+
+<br>
+
+## ExampleController.js
+
+```javascript
+const client = require("./path/to/client");
+
+module.exports = {
+  async index(request, response) {
+    try {
+      const row = await client.findAll("my_table");
+
+      return res.status(200).json(row);
+    } catch (error) {
+      return res.status(400).json(error.message);
+    }
+  },
+};
+```
+
+<br>
 
 ## Author
 
