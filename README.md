@@ -24,7 +24,15 @@
 ## Install
 
 ```sh
-yarn add or npm install
+yarn add siimpleorm
+```
+
+### or
+
+<br>
+
+```sh
+npm install siimpleorm
 ```
 
 <br>
