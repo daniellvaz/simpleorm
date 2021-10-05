@@ -1,4 +1,4 @@
-const { production } = require("../simpleorm.config.json");
+const { production } = require("../../../simpleorm.config.json");
 
 module.exports = {
   production,
