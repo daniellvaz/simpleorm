@@ -13,7 +13,7 @@ router.get("/users", async (req, res) => {
   res.status(200).json(response);
 });
 
-router.post("/", async (req, res) => {
+router.post("/users", async (req, res) => {
   const response = await database.create("users", {
     name: req.body.name,
     email: req.body.email,

@@ -1,8 +1,43 @@
 class Client {
-  database = require("../knex");
+  conn = {};
+  database;
 
+  constructor(
+    client = null,
+    connection = {
+      host: null,
+      port: null,
+      password: null,
+      user: null,
+      database: null,
+    }
+  ) {
+    this.conn = { client, connection };
+  }
+
+  async connection() {
+    if (!this.conn.client) {
+      this.database = require("../knex");
+      return;
+    }
+
+    this.database = require("knex")(this.conn);
+  }
+
+  /**
+   * Method to run raw query
+   *
+   * @param {string} query Select * from `users` where `users`.id = 1
+   * @returns {Object}
+   */
   async raw(query) {
+    await this.connection();
+
     const response = await this.database.raw(query);
+
+    if (this.conn.client === "postgres") {
+      return response.rows;
+    }
     return response[0];
   }
 
@@ -11,11 +46,13 @@ class Client {
    *
    * DELETE FROM "table_name" WHERE "condition" = "value"
    *
-   * @param {string} table
-   * @param {object} { where }
+   * @param {string} "table_name"
+   * @param {object} { id: 1 }
    * @returns {object}
    */
   async delete(table, { where }) {
+    await this.connection();
+
     const response = await this.database(table).where(where).del();
     return response;
   }
@@ -31,6 +68,8 @@ class Client {
    * @param {object} data { name: "user name", age: 29, email: "user@email.com" } // outputs SET name = "user name"
    */
   async update(table, { where, data }) {
+    await this.connection();
+
     const response = await this.database(table).where(where).update(data);
     return response;
   }
@@ -45,6 +84,8 @@ class Client {
    * @param {object}
    */
   async create(table, data) {
+    await this.connection();
+
     const response = await this.database(table).insert(data);
     return response;
   }
@@ -59,6 +100,8 @@ class Client {
    * @returns {Object}
    */
   async findAll(column = "*", table, include = false) {
+    await this.connection();
+
     if (include) {
       const response = await this.database.select(column).from(table);
 
@@ -84,6 +127,8 @@ class Client {
    * @returns {Promise}
    */
   async findOne(column = "*", table, where) {
+    await this.connection();
+
     if (typeof where != "object") {
       throw new Error("Where type must be Object");
     }
@@ -115,6 +160,8 @@ class Client {
    * ]
    */
   async createTable(name, autoIncrement = true, fields = []) {
+    await this.connection();
+
     try {
       await this.database.schema.createTable(name, (table) => {
         if (autoIncrement) table.increments();
@@ -164,6 +211,8 @@ class Client {
   }
 
   async dropTable(name) {
+    await this.connection();
+
     await this.database.schema.dropTableIfExists(name);
     return;
   }

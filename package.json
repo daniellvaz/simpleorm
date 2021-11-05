@@ -18,6 +18,7 @@
     "database"
   ],
   "dependencies": {
+    "express": "^4.17.1",
     "knex": "^0.95.11",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
