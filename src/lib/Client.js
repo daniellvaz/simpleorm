@@ -39,6 +39,10 @@ class Client {
     return rows;
   }
 
+  async _close() {
+    await this.database.destroy();
+  }
+
   /**
    * Method to run raw query
    *
@@ -74,6 +78,7 @@ class Client {
     const response = await this.database(!table ? this.table : table)
       .where(where)
       .del();
+
     return response;
   }
 
@@ -93,6 +98,7 @@ class Client {
     const response = await this.database(!table ? this.table : table)
       .where(where)
       .update(data);
+
     return response;
   }
 
@@ -142,6 +148,7 @@ class Client {
     const response = await this.database
       .select(column)
       .from(!table ? this.table : table);
+
     return response;
   }
 
