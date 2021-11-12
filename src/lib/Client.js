@@ -1,6 +1,7 @@
 class Client {
   conn = {};
   database;
+  table;
 
   constructor(
     client = null,
@@ -10,9 +11,11 @@ class Client {
       password: null,
       user: null,
       database: null,
-    }
+    },
+    table = null
   ) {
     this.conn = { client, connection };
+    this.table = table;
   }
 
   async connection() {
@@ -24,6 +27,18 @@ class Client {
     this.database = require("knex")(this.conn);
   }
 
+  async _postgresExecutionRawQuery(query) {
+    const result = await this.database.raw(query);
+
+    return result.rows;
+  }
+
+  async _mysqlExecutionRawQuery(query) {
+    const [rows] = await this.database.raw(query);
+
+    return rows;
+  }
+
   /**
    * Method to run raw query
    *
@@ -33,12 +48,15 @@ class Client {
   async raw(query) {
     await this.connection();
 
-    const response = await this.database.raw(query);
-
     if (this.conn.client === "postgres") {
-      return response.rows;
+      const result = this._postgresExecutionRawQuery(query);
+
+      return result;
     }
-    return response[0];
+
+    const [rows] = this._mysqlExecutionRawQuery(query);
+
+    return rows;
   }
 
   /**
@@ -53,7 +71,9 @@ class Client {
   async delete(table, { where }) {
     await this.connection();
 
-    const response = await this.database(table).where(where).del();
+    const response = await this.database(!table ? this.table : table)
+      .where(where)
+      .del();
     return response;
   }
 
@@ -70,7 +90,9 @@ class Client {
   async update(table, { where, data }) {
     await this.connection();
 
-    const response = await this.database(table).where(where).update(data);
+    const response = await this.database(!table ? this.table : table)
+      .where(where)
+      .update(data);
     return response;
   }
 
@@ -86,7 +108,14 @@ class Client {
   async create(table, data) {
     await this.connection();
 
-    const response = await this.database(table).insert(data);
+    const response = await this.database(!table ? this.table : table).insert(
+      data
+    );
+
+    if (this.conn.client === "postgres") {
+      return response.rows;
+    }
+
     return response;
   }
 
@@ -103,12 +132,16 @@ class Client {
     await this.connection();
 
     if (include) {
-      const response = await this.database.select(column).from(table);
+      const response = await this.database
+        .select(column)
+        .from(!table ? this.table : table);
 
       return response;
     }
 
-    const response = await this.database.select(column).from(table);
+    const response = await this.database
+      .select(column)
+      .from(!table ? this.table : table);
     return response;
   }
 
@@ -133,7 +166,9 @@ class Client {
       throw new Error("Where type must be Object");
     }
 
-    const response = await this.database(table).where(where).select(column);
+    const response = await this.database(!table ? this.table : table)
+      .where(where)
+      .select(column);
 
     return response;
   }
