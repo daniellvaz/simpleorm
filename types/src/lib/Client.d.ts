@@ -1,24 +1,40 @@
-import { Knex } from "knex";
-import { ICondition } from "./types/ICondition";
-import { IParams } from "./types/IParams";
-import { ITableField } from "./types/ITableField";
-
 export = Client;
 declare class Client {
-  database: Knex;
-
-  raw<t>(query: string): Promise<t[]>;
+  constructor(
+    client?: any,
+    connection?: {
+      host: string;
+      port: number;
+      password: string;
+      user: string;
+      database: string;
+    },
+    table?: string
+  );
+  conn: {};
+  database: any;
+  table: any;
+  connection(): Promise<void>;
+  _postgresExecutionRawQuery(query: any): Promise<any>;
+  _mysqlExecutionRawQuery(query: any): Promise<any>;
+  _close(): Promise<void>;
+  /**
+   * Method to run raw query
+   *
+   * @param {string} query Select * from `users` where `users`.id = 1
+   * @returns {Object}
+   */
+  raw(query: string): any;
   /**
    * Method to delete an value on database
    *
    * DELETE FROM "table_name" WHERE "condition" = "value"
    *
-   * @param {string} table
-   * @param {object} { where }
+   * @param {string} "table_name"
+   * @param {object} { id: 1 }
    * @returns {object}
    */
-  delete<r, t>(table: string, { where }: IParams<r, t>): Promise<void>;
-
+  delete(table: any, { where }: object): object;
   /**
    * Method to update a value on table
    *
@@ -29,8 +45,7 @@ declare class Client {
    * @param {object} fields { name: "user name", age: 29, email: "user@email.com" } // outputs SET name = "user name"
    * @param {object} data { name: "user name", age: 29, email: "user@email.com" } // outputs SET name = "user name"
    */
-  update<r, t>(table: string, { where, data }: IParams<r, t>): Promise<t>;
-
+  update(table: string, { where, data }: object): Promise<any>;
   /**
    * Method to insert a value on table
    *
@@ -40,8 +55,7 @@ declare class Client {
    * @param {object} data
    * @param {object}
    */
-  create<t>(table: string, data: t): Promise<t[]>;
-
+  create(table: string, data: object): Promise<any>;
   /**
    * Method to find all data
    *
@@ -51,12 +65,7 @@ declare class Client {
    * @param {string} table
    * @returns {Object}
    */
-  findAll<t>(
-    column: string | null,
-    table: string,
-    include?: boolean
-  ): Promise<t[]>;
-
+  findAll(column: string, table: string, include?: boolean): any;
   /**
    * * Method to find all data
    *
@@ -71,12 +80,7 @@ declare class Client {
    * @param {object} where
    * @returns {Promise}
    */
-  findOne<t>(
-    column: string | null,
-    table: string,
-    where: t
-  ): Promise<t[] | undefined>;
-
+  findOne(column: string, table: string, where: object): Promise<any>;
   /**
    * Method to create a table
    *
@@ -98,15 +102,10 @@ declare class Client {
    *  }
    * ]
    */
-  createTable<t>(
+  createTable(
     name: any,
     autoIncrement?: boolean,
-    fields?: ITableField
-  ): Promise<t[] | undefined> {}
-
-  /**
-   *  Method to delete an table
-   * @param {string} name
-   */
-  dropTable(name: string): Promise<void>;
+    fields?: object
+  ): Promise<void>;
+  dropTable(name: any): Promise<void>;
 }
