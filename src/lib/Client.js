@@ -1,3 +1,4 @@
+const { production } = require("../../../simpleorm.config.json");
 class Client {
   conn = {};
   database;
@@ -52,7 +53,7 @@ class Client {
   async raw(query) {
     await this.connection();
 
-    if (this.conn.client === "postgres") {
+    if (this.conn.client === "postgres" || production.client === "postgres") {
       const result = await this._postgresExecutionRawQuery(query);
 
       return result;
