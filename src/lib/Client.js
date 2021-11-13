@@ -53,12 +53,12 @@ class Client {
     await this.connection();
 
     if (this.conn.client === "postgres") {
-      const result = this._postgresExecutionRawQuery(query);
+      const result = await this._postgresExecutionRawQuery(query);
 
       return result;
     }
 
-    const [rows] = this._mysqlExecutionRawQuery(query);
+    const [rows] = await this._mysqlExecutionRawQuery(query);
 
     return rows;
   }
