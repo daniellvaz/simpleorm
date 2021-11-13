@@ -5,7 +5,7 @@ const database = new Client("postgres", {
   port: 5432,
   password: "123456",
   user: "postgres",
-  database: "teste",
+  database: "goproject",
 });
 
 module.exports = database;

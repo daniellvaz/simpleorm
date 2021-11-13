@@ -20,7 +20,7 @@ declare class Client {
    * @param {string} query Select * from `users` where `users`.id = 1
    * @returns {Object}
    */
-  raw<T>(query: string): Promise<T | T[] | void>;
+  raw<T>(query: string): Promise<any>;
   /**
    * Method to delete an value on database
    *
