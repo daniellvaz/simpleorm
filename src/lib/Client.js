@@ -1,4 +1,4 @@
-const { production } = require("../../../simpleorm.config.json");
+const { production } = require("../../../../simpleorm.config.json");
 class Client {
   conn = {};
   database;
@@ -40,6 +40,12 @@ class Client {
     return rows;
   }
 
+  async _oracledbExecutionRawQuery(query) {
+    const rows = await this.database.raw(query);
+
+    return rows;
+  }
+
   async _close() {
     await this.database.destroy();
   }
@@ -56,11 +62,20 @@ class Client {
     if (this.conn.client === "postgres" || production.client === "postgres") {
       const result = await this._postgresExecutionRawQuery(query);
 
+      this._close();
       return result;
     }
 
-    const [rows] = await this._mysqlExecutionRawQuery(query);
+    if (this.conn.client === "oracledb" || production.client === "oracledb") {
+      const result = await this._oracledbExecutionRawQuery(query);
 
+      this._close();
+      return result;
+    }
+
+    const rows = await this._mysqlExecutionRawQuery(query);
+
+    this._close();
     return rows;
   }
 
@@ -80,6 +95,7 @@ class Client {
       .where(where)
       .del();
 
+    this._close();
     return response;
   }
 
@@ -100,6 +116,7 @@ class Client {
       .where(where)
       .update(data);
 
+    this._close();
     return response;
   }
 
@@ -122,6 +139,8 @@ class Client {
     if (this.conn.client === "postgres") {
       return response.rows;
     }
+
+    await this._close();
 
     return response;
   }
@@ -178,6 +197,7 @@ class Client {
       .where(where)
       .select(column);
 
+    this._close();
     return response;
   }
 
