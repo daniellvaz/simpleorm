@@ -1,9 +1,5 @@
 const { production } = require("../../../../simpleorm.config.json");
 class Client {
-  conn = {};
-  database;
-  table;
-
   constructor(
     client = null,
     connection = {
@@ -15,8 +11,9 @@ class Client {
     },
     table = null
   ) {
-    this.conn = { client, connection };
+    this.conn = { client, connection } || {};
     this.table = table;
+    this.database = null;
   }
 
   async connection() {
