@@ -4,7 +4,7 @@
   "types": "types",
   "main": "index.js",
   "repository": {
-    "url": "https://gitlab.com/daniellvaz/simpleorm"
+    "url": "https://github.com/daniellvaz/simpleorm"
   },
   "author": {
     "name": "Daniel Murilo Vaz",
