@@ -1,3 +1,3 @@
-const Client = require("./src/lib/Client");
+import { Client } from "./src/lib/Client/Client";
 
-module.exports = Client;
+const client = new Client();
