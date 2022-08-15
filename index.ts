@@ -1,1 +1,3 @@
-export { Client, Table, Property} from "./packages/orm"
+import { Client, Table, Property} from "./packages/orm"
+
+export { Client, Table, Property } 
