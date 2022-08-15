@@ -1,7 +1,7 @@
 <h1 align="center">
   <img src="assets/logo.png">
 </h1>
-<p>
+<p align="center">
   <img alt="Version" src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/Codesandbox-000000?style=for-the-badge&logo=CodeSandbox&logoColor=white" />
