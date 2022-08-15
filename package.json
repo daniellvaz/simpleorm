@@ -1,6 +1,6 @@
 {
   "name": "siimpleorm",
-  "private": false,
+  "private": true,
   "version": "3.1.0",
   "types": "types",
   "main": "index.js",
