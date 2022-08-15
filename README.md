@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/daniellvaz/simpleorm/blob/master/examples/logo.png">
+  <img src="assets/logo.png">
 </h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" />
