@@ -1,7 +1,6 @@
-import { Config } from "../../types/typer";
+import { Config } from "../../types/types";
 import { Knex, knex } from "knex";
 import { connection } from "../../knex";
-import { Query } from "../Query/Query";
 
 export class CreateConnection {
   
