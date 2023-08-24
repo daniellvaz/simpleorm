@@ -37,47 +37,44 @@ npm install siimpleorm
 
 <br>
 
+### or
+
+<br>
+
+```sh
+pnpm install siimpleorm
+```
+
+<br>
+
 ## simpleorm.config.json
 
-```json
-{
-  "production": {
-    "client": "mysql",
-    "connection": {
-      "host": "127.0.0.1",
-      "port": 3306,
-      "user": "root",
-      "password": "my_password",
-      "database": "my_database"
-    },
-    "migrantions": "./path/to/your/migrantions"
-  }
+```env
+  SIMPLE_CLIENT="mysql"
+  SIMPLE_HOST="localhost"
+  SIMPLE_USER="root"
+  SIMPLE_PASSWORD=123456
+  SIMPLE_DATABASE="example"
+```
+
+## Example Entity
+
+```typescript
+@Table('users')
+export default class User extends Entity {
+  public id?: string;
+  public name: string;
+  public age: string;
 }
 ```
 
-<br>
+## Example Controller
 
-## index.js
-
-```javascript
-const { Client } = require("siimpleorm");
-
-const database = new Client();
-
-module.exports = database;
-```
-
-<br>
-
-## ExampleController.js
-
-```javascript
-const client = require("./path/to/client");
-
-module.exports = {
+```typescript
+const controller = {
   async index(request, response) {
     try {
-      const row = await client.findAll(null, "my_table"); //first parameter null default "*"
+      const row = await client.findAll();
 
       return res.status(200).json(row);
     } catch (error) {
@@ -85,6 +82,8 @@ module.exports = {
     }
   },
 };
+
+export default controller;
 ```
 
 <br>
