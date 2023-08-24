@@ -1,5 +1,5 @@
 {
-  "name": "@simpleorm/orm",
+  "name": "simpleorm",
   "version": "2.3.0",
   "types": "types",
   "main": "index.ts",
@@ -9,7 +9,7 @@
   "author": {
     "name": "Daniel Murilo Vaz",
     "email": "daniellmvaz@gmail.com",
-    "url": "https://www.daniellmvaz.com"
+    "url": "https://www.danielmurilo.com"
   },
   "keywords": [
     "orm",

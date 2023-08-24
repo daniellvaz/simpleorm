@@ -47,7 +47,7 @@ pnpm install siimpleorm
 
 <br>
 
-## simpleorm.config.json
+## .env
 
 ```env
   SIMPLE_CLIENT="mysql"
