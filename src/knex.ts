@@ -1,4 +1,4 @@
-import { knex } from 'knex' 
+import { knex } from 'knex';
 
 export const connection = knex({
   client: process.env.SIMPLE_CLIENT,
@@ -7,5 +7,6 @@ export const connection = knex({
     user: process.env.SIMPLE_USER,
     password: process.env.SIMPLE_PASSWORD,
     database: process.env.SIMPLE_DATABASE,
-  }
+    connectionString: process.env.SIMPLE_STRING,
+  },
 });
